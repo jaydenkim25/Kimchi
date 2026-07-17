@@ -75,7 +75,6 @@ button:hover {
     <button onclick="search()">Search</button>
 </div>
 
-
 <script>
 
 async function search() {
@@ -93,17 +92,15 @@ async function search() {
             "https://kimchi-api-8cob.onrender.com/search?q=" + encodeURIComponent(query)
         );
 
-        alert("API status: " + response.status);
-
         let data = await response.json();
+
+        document.title = "Kimchi - " + query;
 
         alert("Kimchi searched: " + data.search);
 
-    } 
-    
-    catch (error) {
+    } catch (error) {
 
-        alert("API connection failed: " + error.message);
+        alert("API connection failed");
 
         console.log(error);
 
