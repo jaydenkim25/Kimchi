@@ -78,22 +78,24 @@ button:hover {
 async function search() {
     let query = document.getElementById("searchBox").value.trim();
 
-    if (query !== "") {
-        try {
-            let response = await fetch(
-                "https://https://kimchi-api-8cob.onrender.com/search?q=" + encodeURIComponent(query)
-            );
+    if (query === "") {
+        return;
+    }
 
-            let data = await response.json();
+    try {
+        let response = await fetch(
+            "https://kimchi-api-8cob.onrender.com/search?q=" + encodeURIComponent(query)
+        );
 
-            document.title = "Kimchi at " + query;
+        let data = await response.json();
 
-            alert("Kimchi searched: " + data.search);
+        document.title = "Kimchi - " + query;
 
-        } catch (error) {
-            alert("API connection failed");
-            console.log(error);
-        }
+        alert("Kimchi searched: " + data.search);
+
+    } catch (error) {
+        alert("API connection failed");
+        console.log(error);
     }
 }
 
