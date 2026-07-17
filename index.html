@@ -61,6 +61,18 @@ button:hover {
     background: #38bdf8;
     color: black;
 }
+
+#results {
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(15, 23, 42, 0.8);
+    border-radius: 15px;
+    text-align: left;
+}
+
+#results h2 {
+    color: #38bdf8;
+}
 </style>
 
 </head>
@@ -79,6 +91,9 @@ button:hover {
 
 <button onclick="clearSearch()">Clear</button>
 
+
+<div id="results"></div>
+
 </div>
 
 
@@ -89,7 +104,6 @@ async function search() {
     let query = document.getElementById("searchBox").value.trim();
 
     if (query === "") {
-        alert("Type something first");
         return;
     }
 
@@ -101,11 +115,32 @@ async function search() {
 
         let data = await response.json();
 
-        alert("Kimchi searched: " + data.search);
+
+        document.getElementById("results").innerHTML = `
+
+            <h2>AI Overview</h2>
+
+            <p>
+                You searched for:
+                <b>${data.search}</b>
+            </p>
+
+            <p>
+                Kimchi is preparing results for this search.
+            </p>
+
+        `;
+
 
     } catch (error) {
 
-        alert("API connection failed");
+        document.getElementById("results").innerHTML = `
+
+            <h2>Error</h2>
+
+            <p>API connection failed.</p>
+
+        `;
 
         console.log(error);
 
@@ -118,13 +153,17 @@ function clearSearch() {
 
     document.getElementById("searchBox").value = "";
 
+    document.getElementById("results").innerHTML = "";
+
 }
 
 
 document.getElementById("searchBox").addEventListener("keydown", function(event) {
 
     if (event.key === "Enter") {
+
         search();
+
     }
 
 });
