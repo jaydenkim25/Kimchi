@@ -60,6 +60,7 @@ button:hover {
     color: black;
 }
 </style>
+
 </head>
 
 <body>
@@ -74,36 +75,51 @@ button:hover {
     <button onclick="search()">Search</button>
 </div>
 
+
 <script>
+
 async function search() {
+
     let query = document.getElementById("searchBox").value.trim();
 
     if (query === "") {
+        alert("Type something first");
         return;
     }
 
     try {
+
         let response = await fetch(
             "https://kimchi-api-8cob.onrender.com/search?q=" + encodeURIComponent(query)
         );
 
+        alert("API status: " + response.status);
+
         let data = await response.json();
 
-        document.title = "Kimchi - " + query;
+        alert("Kimchi searched: " + data.search);
 
-        alert("NEW VERSION LOADED");
+    } 
+    
+    catch (error) {
 
-    } catch (error) {
-        alert("API connection failed");
+        alert("API connection failed: " + error.message);
+
         console.log(error);
+
     }
+
 }
 
+
 document.getElementById("searchBox").addEventListener("keydown", function(event) {
+
     if (event.key === "Enter") {
         search();
     }
+
 });
+
 </script>
 
 </body>
